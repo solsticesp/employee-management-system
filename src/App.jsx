@@ -1,9 +1,10 @@
-import Footer from './components/Footer';
+import './styles.css';
+
 import Header from './components/Header';
-import Pagination from './components/Pagination';
 import Search from './components/Search';
 import UserList from './components/UserList';
-import './styles.css';
+import Pagination from './components/Pagination';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -31,7 +32,7 @@ function App() {
 
 
         {/* <!-- Delete user component  --> */}
-        
+
 
       </main>
 
