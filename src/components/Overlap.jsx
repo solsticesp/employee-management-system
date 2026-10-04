@@ -4,10 +4,10 @@ export default function Overlap() {
             <div className="loading-shade">
 
                 {/* <!-- Loading spinner  --> */}
-                <div className="spinner"></div>
+                {/* <div className="spinner"></div> */}
 
                 {/* <!-- No users added yet  --> */}
-                <div className="table-overlap">
+                {/* <div className="table-overlap">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -24,11 +24,10 @@ export default function Overlap() {
                         ></path>
                     </svg>
                     <h2>There is no users yet.</h2>
-                </div>
+                </div> */}
 
                 {/* <!-- No content overlap component  --> */}
-
-                <div className="table-overlap">
+                {/* <div className="table-overlap">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -45,11 +44,10 @@ export default function Overlap() {
                         ></path>
                     </svg>
                     <h2>Sorry, we couldn't find what you're looking for.</h2>
-                </div>
+                </div> */}
 
                 {/* <!-- On error overlap component  --> */}
-
-                <div className="table-overlap">
+                {/* <div className="table-overlap">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -66,7 +64,7 @@ export default function Overlap() {
                         ></path>
                     </svg>
                     <h2>Failed to fetch</h2>
-                </div>
+                </div> */}
             </div>
         </>
     );
