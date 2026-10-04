@@ -27,7 +27,11 @@ function App() {
 
 	const addUserClickHandler = () => {
 		setShowSaveUserModal(true);
-	}
+	};
+
+	const addUserCloseHandler = () => {
+		setShowSaveUserModal(false);
+	};
 
 	return (
 		<>
@@ -50,7 +54,7 @@ function App() {
 
 
 				{/* <!-- Create/Edit Form component  --> */}
-				{showSaveUserModal && <SaveUserModal />}
+				{showSaveUserModal && <SaveUserModal onClose={addUserCloseHandler}/>}
 
 				{/* <!-- Delete user component  --> */}
 
