@@ -1,7 +1,7 @@
 export default function Overlap() {
     return (
         <>
-            <div className="loading-shade">
+            {/* <div className="loading-shade"> */}
 
                 {/* <!-- Loading spinner  --> */}
                 {/* <div className="spinner"></div> */}
@@ -65,7 +65,7 @@ export default function Overlap() {
                     </svg>
                     <h2>Failed to fetch</h2>
                 </div> */}
-            </div>
+            {/* </div> */}
         </>
     );
 }

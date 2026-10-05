@@ -1,4 +1,23 @@
-export default function UserDetailsModal() {
+import { useEffect, useState } from "react";
+import { fromIsodate } from "../utils/dateTimeUtils";
+
+const baseUrl = 'https://qwubtacarhfkpznpuyyp.supabase.co/rest/v1/users';
+const apiKey = 'sb_publishable_wUWb7dKoHhQYEe3MWVya9w__71LpL8j';
+
+export default function UserDetailsModal({userId}) {
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        fetch(`${baseUrl}?id=eq.${userId}`, {
+            headers: {
+                'apiKey': apiKey
+            }
+        })
+        .then(res => res.json())
+        .then(data => setUser(data[0]))
+        .catch(error => console.error('Error fetching user data', error))
+    }, [userId]);
+
     return (
         <div className="overlay">
             <div className="backdrop"></div>
@@ -17,24 +36,23 @@ export default function UserDetailsModal() {
                     </header>
                     <div className="content">
                         <div className="image-container">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt=""
-                                className="image" />
+                            <img src={user.imageUrl} alt={user.firstName} className="image" />
                         </div>
                         <div className="user-details">
-                            <p>User Id: <strong>62bb0c0eda039e2fdccba57b</strong></p>
+                            <p>User Id: <strong>{user.id}</strong></p>
                             <p>
                                 Full Name:
-                                <strong> Peter Johnson </strong>
+                                <strong> {user.firstName} {user.lastName} </strong>
                             </p>
-                            <p>Email: <strong>peter@abv.bg</strong></p>
-                            <p>Phone Number: <strong>0812345678</strong></p>
+                            <p>Email: <strong>{user.email}</strong></p>
+                            <p>Phone Number: <strong>{user.phoneNumber}</strong></p>
                             <p>
                                 Address:
-                                <strong> Bulgaria, Sofia, Aleksandar Malinov 78 </strong>
+                                <strong> {user.address?.country}, {user.address?.city}, {user.address?.street}, {user.address?.streetNumber} </strong>
                             </p>
 
-                            <p>Created on: <strong>Wednesday, June 28, 2022</strong></p>
-                            <p>Modified on: <strong>Thursday, June 29, 2022</strong></p>
+                            <p>Created on: <strong>{fromIsodate(user.createdAt)}</strong></p>
+                            <p>Modified on: <strong>{fromIsodate(user.updatedAt)}</strong></p>
                         </div>
                     </div>
                 </div>

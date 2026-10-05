@@ -1,7 +1,17 @@
+import { useState } from "react";
 import Overlap from "./Overlap";
+import UserDetailsModal from "./UserDetailsModal";
 import UserListItem from "./UserListItem";
 
-export default function UserList({users}) {
+export default function UserList({ users }) {
+    const [selectedUserId, setSelectedUserId] = useState(null)
+    const [showUserDetails, setShowUserDEtails] = useState(false);
+
+    const showUserDetailsHandler = (userId) => {
+        setSelectedUserId(userId);
+        setShowUserDEtails(true);
+    }
+
     return (
         <div className="table-wrapper">
             {/* <!-- Overlap components  --> */}
@@ -64,9 +74,17 @@ export default function UserList({users}) {
                 </thead>
                 <tbody>
                     {/* <!-- Table row component --> */}
-                    {users.map(user => <UserListItem key={user.id} {...user} />)}
+                    {users.map(user => (
+                        <UserListItem
+                            key={user.id}
+                            onInfoClick={showUserDetailsHandler}
+                            {...user}
+                        />
+                    ))}
                 </tbody>
             </table>
+
+            {showUserDetails && <UserDetailsModal userId={selectedUserId}/>}
         </div>
     );
 }
