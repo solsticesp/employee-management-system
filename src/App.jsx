@@ -8,16 +8,17 @@ import Footer from './components/Footer';
 import './styles.css';
 import SaveUserModal from './components/SaveUserModal';
 
-
+const baseUrl = 'https://qwubtacarhfkpznpuyyp.supabase.co/rest/v1/users';
+const apiKey = 'sb_publishable_wUWb7dKoHhQYEe3MWVya9w__71LpL8j';
 
 function App() {
 	const [users, setUsers] = useState([]);
 	const [showSaveUserModal, setShowSaveUserModal] = useState(false);
 
 	useEffect(() => {
-		fetch('https://qwubtacarhfkpznpuyyp.supabase.co/rest/v1/users', {
+		fetch(baseUrl, {
 			headers: {
-				apiKey: 'sb_publishable_wUWb7dKoHhQYEe3MWVya9w__71LpL8j'
+				'apiKey': apiKey
 			}
 		})
 			.then(res => res.json())
@@ -32,6 +33,19 @@ function App() {
 	const addUserCloseHandler = () => {
 		setShowSaveUserModal(false);
 	};
+
+	const submitUserHandler = (user) => {
+		fetch(baseUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'apiKey': apiKey
+			},
+			body: JSON.stringify(user)
+		})
+			.then((res) => console.log('User added' + res))
+			.catch(error => alert('Error adding user:' + error))
+	}
 
 	return (
 		<>
@@ -54,7 +68,7 @@ function App() {
 
 
 				{/* <!-- Create/Edit Form component  --> */}
-				{showSaveUserModal && <SaveUserModal onClose={addUserCloseHandler}/>}
+				{showSaveUserModal && <SaveUserModal onClose={addUserCloseHandler} onSubmit={submitUserHandler}/>}
 
 				{/* <!-- Delete user component  --> */}
 
