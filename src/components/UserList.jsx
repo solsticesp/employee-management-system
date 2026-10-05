@@ -12,6 +12,11 @@ export default function UserList({ users }) {
         setShowUserDEtails(true);
     }
 
+    const hideUserDetailsHandler = () => {
+        setShowUserDEtails(false);
+        setSelectedUserId(null);
+    }
+
     return (
         <div className="table-wrapper">
             {/* <!-- Overlap components  --> */}
@@ -84,7 +89,7 @@ export default function UserList({ users }) {
                 </tbody>
             </table>
 
-            {showUserDetails && <UserDetailsModal userId={selectedUserId}/>}
+            {showUserDetails && <UserDetailsModal userId={selectedUserId} onClose={hideUserDetailsHandler}/>}
         </div>
     );
 }

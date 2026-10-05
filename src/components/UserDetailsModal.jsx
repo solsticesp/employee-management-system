@@ -4,7 +4,10 @@ import { fromIsodate } from "../utils/dateTimeUtils";
 const baseUrl = 'https://qwubtacarhfkpznpuyyp.supabase.co/rest/v1/users';
 const apiKey = 'sb_publishable_wUWb7dKoHhQYEe3MWVya9w__71LpL8j';
 
-export default function UserDetailsModal({userId}) {
+export default function UserDetailsModal({
+    userId,
+    onClose,    
+}) {
     const [user, setUser] = useState({});
 
     useEffect(() => {
@@ -20,12 +23,12 @@ export default function UserDetailsModal({userId}) {
 
     return (
         <div className="overlay">
-            <div className="backdrop"></div>
+            <div className="backdrop" onClick={onClose}></div>
             <div className="modal">
                 <div className="detail-container">
                     <header className="headers">
                         <h2>User Detail</h2>
-                        <button className="btn close">
+                        <button className="btn close" onClick={onClose}>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                 <path fill="currentColor"
