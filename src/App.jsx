@@ -16,12 +16,7 @@ function App() {
 	const [showSaveUserModal, setShowSaveUserModal] = useState(false);
 
 	useEffect(() => {
-		fetch(baseUrl, {
-			headers: {
-				'apiKey': apiKey
-			}
-		})
-			.then(res => res.json())
+		fetchUsers()
 			.then(data => setUsers(data))
 			.catch(error => console.error('Error fetching users:', error));
 	}, []);
@@ -34,18 +29,24 @@ function App() {
 		setShowSaveUserModal(false);
 	};
 
-	const submitUserHandler = (user) => {
-		fetch(baseUrl, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'apiKey': apiKey
-			},
-			body: JSON.stringify(user)
-		})
-			.then((res) => console.log('User added' + res))
-			.catch(error => alert('Error adding user:' + error))
-			.finally(() => setShowSaveUserModal(false))		
+	const submitUserHandler = async (user) => {
+		try {
+			await fetch(baseUrl, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'apiKey': apiKey
+				},
+				body: JSON.stringify(user)
+			})
+
+			const updatedUsers = await fetchUsers();
+			setUsers(updatedUsers);
+		} catch (error) {
+			alert('Error adding user:' + error)
+		} finally {
+			setShowSaveUserModal(false)
+		}
 	}
 
 	return (
@@ -69,7 +70,7 @@ function App() {
 
 
 				{/* <!-- Create/Edit Form component  --> */}
-				{showSaveUserModal && <SaveUserModal onClose={addUserCloseHandler} onSubmit={submitUserHandler}/>}
+				{showSaveUserModal && <SaveUserModal onClose={addUserCloseHandler} onSubmit={submitUserHandler} />}
 
 				{/* <!-- Delete user component  --> */}
 
@@ -79,6 +80,18 @@ function App() {
 			<Footer />
 		</>
 	)
+}
+
+async function fetchUsers() {
+	const response = await fetch(baseUrl, {
+		headers: {
+			'apiKey': apiKey
+		}
+	});
+
+	const data = await response.json();
+
+	return data;
 }
 
 export default App
