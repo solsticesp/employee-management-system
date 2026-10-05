@@ -54,7 +54,6 @@ export default function UserList({
     return (
         <div className="table-wrapper">
             {/* <!-- Overlap components  --> */}
-            <Overlap />
 
             <table className="table">
                 <thead>
@@ -112,6 +111,8 @@ export default function UserList({
                     </tr>
                 </thead>
                 <tbody>
+                    {users.length === 0 && <Overlap />}
+
                     {/* <!-- Table row component --> */}
                     {users.map(user => (
                         <UserListItem
