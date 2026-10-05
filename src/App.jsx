@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { fetchUsers } from './api/usersApi';
 
 import Header from './components/Header';
 import Search from './components/Search';
@@ -47,7 +48,16 @@ function App() {
 		} finally {
 			setShowSaveUserModal(false)
 		}
-	}
+	};
+
+	const userUpdateHandler = async () => {
+		try {
+			const updatedUsers = await fetchUsers();
+			setUsers(updatedUsers);
+		} catch (error) {
+			console.log('Error updating users: ', error);
+		}
+	};
 
 	return (
 		<>
@@ -58,7 +68,7 @@ function App() {
 				<section className="card users-container">
 					<Search />
 
-					<UserList users={users} />
+					<UserList users={users} onUserUpdate={userUpdateHandler}/>
 
 					{/* <!-- New user button  --> */}
 					<button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
@@ -80,18 +90,6 @@ function App() {
 			<Footer />
 		</>
 	)
-}
-
-async function fetchUsers() {
-	const response = await fetch(baseUrl, {
-		headers: {
-			'apiKey': apiKey
-		}
-	});
-
-	const data = await response.json();
-
-	return data;
 }
 
 export default App

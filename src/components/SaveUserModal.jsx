@@ -1,4 +1,7 @@
-export default function SaveUserModal({onClose, onSubmit}) {
+export default function SaveUserModal({
+    onClose, 
+    onSubmit
+}) {
     const submitHandler = (e) => {
         e.preventDefault();
 
