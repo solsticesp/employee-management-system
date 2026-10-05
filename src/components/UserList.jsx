@@ -4,6 +4,7 @@ import Overlap from "./Overlap";
 import UserDetailsModal from "./UserDetailsModal";
 import UserListItem from "./UserListItem";
 import DeleteUserModal from "./DeleteUserModal";
+import SaveUserModal from "./SaveUserModal";
 
 const baseUrl = 'https://qwubtacarhfkpznpuyyp.supabase.co/rest/v1/users';
 const apiKey = 'sb_publishable_wUWb7dKoHhQYEe3MWVya9w__71LpL8j';
@@ -12,9 +13,11 @@ export default function UserList({
     users,
     onUserUpdate,
 }) {
-    const [selectedUserId, setSelectedUserId] = useState(null)
+    const [selectedUserId, setSelectedUserId] = useState(null);
     const [showUserDetails, setShowUserDEtails] = useState(false);
-    const [showDeleteUserModal, setShowDeleteUserModal] = useState(false)
+    const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
+    const [showUserEdit, setShowUserEdit] = useState(false)
+
 
     const showUserDetailsHandler = (userId) => {
         setSelectedUserId(userId);
@@ -26,9 +29,15 @@ export default function UserList({
         setShowDeleteUserModal(true);
     }
 
+    const showEditUserHandler = (userId) => {
+        setSelectedUserId(userId); 
+        setShowUserEdit(true);
+    }
+
     const hideModalHandler = () => {
         setShowUserDEtails(false);
         setShowDeleteUserModal(false);
+        setShowUserEdit(false);
         setSelectedUserId(null);
     }
 
@@ -53,7 +62,7 @@ export default function UserList({
 
     return (
         <div className="table-wrapper">
-            {/* <!-- Overlap components  --> */}
+            {users.length === 0 && <Overlap />}
 
             <table className="table">
                 <thead>
@@ -111,14 +120,13 @@ export default function UserList({
                     </tr>
                 </thead>
                 <tbody>
-                    {users.length === 0 && <Overlap />}
-
                     {/* <!-- Table row component --> */}
                     {users.map(user => (
                         <UserListItem
                             key={user.id}
                             onInfoClick={showUserDetailsHandler}
                             onDeleteClick={showDeleteUserHandler}
+                            onEditClick={showEditUserHandler}
                             {...user}
                         />
                     ))}
@@ -127,6 +135,7 @@ export default function UserList({
 
             {showUserDetails && <UserDetailsModal userId={selectedUserId} onClose={hideModalHandler} />}
             {showDeleteUserModal && <DeleteUserModal onClose={hideModalHandler} onDelete={deleteUserHandler} />}
+            {showUserEdit && <SaveUserModal userId={selectedUserId} onClose={hideModalHandler} onSubmit={onUserUpdate}/>}
         </div>
     );
 }
