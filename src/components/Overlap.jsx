@@ -3,8 +3,8 @@ export default function Overlap() {
         <>
             <div className="loading-shade">
 
-                {/* <!-- Loading spinner  --> */}
-                {/* <div className="spinner"></div> */}
+                {/* <!-- Loading spinner  --> */} 
+                <div className="spinner"></div>
 
                 {/* <!-- No users added yet  --> */}
                 {/* <div className="table-overlap">
