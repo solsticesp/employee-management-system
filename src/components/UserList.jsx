@@ -47,7 +47,6 @@ export default function UserList({
                 method: 'DELETE',
                 headers: {
                     'apikey': apiKey,
-                    'Authorization': `Bearer ${apiKey}`
                 }
             });
 
@@ -60,9 +59,23 @@ export default function UserList({
 
     };
 
-    // const editUserHandler = (userId) => {
-
-    // }
+    const editUserHandler = async (user) => {
+        try {
+            await fetch(`${baseUrl}?id=eq.${selectedUserId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': apiKey,
+                },
+                body: JSON.stringify(user)
+            })
+            onUserUpdate();
+        } catch (error) {
+            alert('Error adding user:' + error)
+        } finally {
+            setShowUserEdit(false)
+        }
+    };
 
     return (
         <div className="table-wrapper">
@@ -143,6 +156,7 @@ export default function UserList({
                 (<SaveUserModal
                     userId={selectedUserId}
                     onClose={hideModalHandler}
+                    onEdit={editUserHandler}
                     edit={true}
                 />
                 )}
