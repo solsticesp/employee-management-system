@@ -30,7 +30,7 @@ export default function UserList({
     }
 
     const showEditUserHandler = (userId) => {
-        setSelectedUserId(userId); 
+        setSelectedUserId(userId);
         setShowUserEdit(true);
     }
 
@@ -59,6 +59,10 @@ export default function UserList({
         }
 
     };
+
+    // const editUserHandler = (userId) => {
+
+    // }
 
     return (
         <div className="table-wrapper">
@@ -135,7 +139,13 @@ export default function UserList({
 
             {showUserDetails && <UserDetailsModal userId={selectedUserId} onClose={hideModalHandler} />}
             {showDeleteUserModal && <DeleteUserModal onClose={hideModalHandler} onDelete={deleteUserHandler} />}
-            {showUserEdit && <SaveUserModal userId={selectedUserId} onClose={hideModalHandler} onSubmit={onUserUpdate}/>}
+            {showUserEdit &&
+                (<SaveUserModal
+                    userId={selectedUserId}
+                    onClose={hideModalHandler}
+                    edit={true}
+                />
+                )}
         </div>
     );
 }
